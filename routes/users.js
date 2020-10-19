@@ -21,7 +21,7 @@ router.post('/create_user', async function (req, res) {
      * to check if email is already exust or not.
      */
     const isUserExist = await User.findOne({ email: email });
-    if (!isUserExist) {
+    if (isUserExist) {
       res.send('user is already exist!');
     } else {
 
