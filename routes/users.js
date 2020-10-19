@@ -14,38 +14,30 @@ router.post('/create_user', async function (req, res) {
     const { user_name, email } = req.body;
     if (!(user_name && email)) {
       console.log('ERRPOR');
-      res.send('username and email requoired');
+      res.send('username and email required');
     };
 
     /**
      * to check if email is already exust or not.
      */
-    // const newUser = await User.aggregate([{ $match: { email: email } }]);
-    if (false) {
+    const isUserExist = await User.findOne({ email: email });
+    if (!isUserExist) {
       res.send('user is already exist!');
     } else {
 
       /**
        * Create a new user object to add to the DB.
        */
-      console.log('user to bre crated', {
-        user_name: user_name,
-        email: email,
-        id: '123'
-      });
-
       const user = new User({
         user_name: user_name,
         email: email,
-        id: '123'
       });
 
       /**
        * save user to database.
        */
-      const addedUser = await user.save();
-      console.log({ addedUser: addedUser })
-      res.send(name + 'has been created!');
+      await user.save();
+      res.send(user_name + 'has been created!');
     }
   } catch (error) {
     console.log('error is', error);

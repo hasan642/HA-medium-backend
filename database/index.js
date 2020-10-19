@@ -3,14 +3,32 @@ const mongoose = require('mongoose');
 /**
  * connect to "mongoDB" database.
  */
-const DATABASE_URL = "mongodb+srv://cluster0.alzfr.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const userName = 'hasanal_1995';
+const password = '67uvEpemYIZrHQK0';
+const DATABASE_URL =
+    "mongodb+srv://" +
+    userName +
+    ":" +
+    password +
+    "@cluster0.alzfr.mongodb.net/medium-db?retryWrites=true&w=majority";
+
+/**
+ * connect to the database.
+ */
 mongoose.connect(
     DATABASE_URL,
-    (err) => {
-        if (err) console.log('error in connect to mongoDB', err);
-        else console.log("successful connection to mongoDB");
-    }
-);
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    })
+    .then(res => {
+        console.log('[database CONNECTED]')
+    })
+    .catch(error => {
+        console.log('ERROR:', error)
+    });
 
 /**
  * export as default.
