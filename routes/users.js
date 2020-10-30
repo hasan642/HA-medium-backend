@@ -11,7 +11,7 @@ const router = express.Router();
  */
 router.post('/create_user', async function (req, res) {
   try {
-console.log('AAAA')
+
     /**
      * grap data from body.
      */
@@ -19,10 +19,7 @@ console.log('AAAA')
       user_name,
       email
     } = req.body;
-console.log({
-  user_name,
-  email
-})
+
     /**
      * username and email are required.
      */
