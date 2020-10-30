@@ -18,6 +18,9 @@ var app = express();
 
 /**
  * view engine setup.
+ * * register jade viewes, than can be called by name.
+ * * example:   res.render('default') ---> this will render
+ * * a jade view with 'default' name.
  */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

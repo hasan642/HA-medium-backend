@@ -1,6 +1,20 @@
 const mongoose = require('../');
 
 /**
+ * custom subscription schema.
+ */
+const SubscriptionSchema = mongoose.Schema({
+    subscription: {
+        type: Boolean,
+        default: false
+    },
+    subscription_date: {
+        type: Date,
+        default: new Date().getTime(),
+    }
+});
+
+/**
  * create user schema.
  */
 const User = mongoose.Schema({
@@ -19,19 +33,12 @@ const User = mongoose.Schema({
     updated_at: {
         type: Date,
         default: new Date().getTime()
+    },
+    subscription: {
+        type: SubscriptionSchema,
+        default: null,
+        required: false
     }
-});
-
-/**
- * do smthing before 'save' event.
- */
-User.pre('save', function (next) {
-    console.log('do smthing before save event');
-
-    /**
-     * complete, before this will not complete.
-     */
-    next();
 });
 
 /**
