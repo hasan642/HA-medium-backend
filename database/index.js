@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
+const {
+    DB_USER_NAME,
+    DB_PASSWORD,
+    DB_HOST_NAME,
+    DB_TYPE
+} = require('../config');
 
 /**
  * connect to "mongoDB" database.
  */
-const userName = 'hasanal_1995';
-const password = '67uvEpemYIZrHQK0';
-const DATABASE_URL =
-    "mongodb+srv://" +
-    userName +
-    ":" +
-    password +
-    "@cluster0.alzfr.mongodb.net/medium-db?retryWrites=true&w=majority";
+const DATABASE_URL = DB_TYPE + DB_USER_NAME + ":" + DB_PASSWORD + DB_HOST_NAME;
 
 /**
  * connect to the database.
