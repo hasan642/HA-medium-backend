@@ -4,7 +4,7 @@ const mongoose = require('../');
  * custom subscription schema.
  */
 const SubscriptionSchema = mongoose.Schema({
-    subscription: {
+    is_subscribed: {
         type: Boolean,
         default: false
     },
