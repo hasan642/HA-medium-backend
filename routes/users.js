@@ -1,4 +1,4 @@
-var express = require('express');
+const express = require('express');
 const User = require('../database/schemas').user;
 
 /**
@@ -8,6 +8,9 @@ const router = express.Router();
 
 /**
  * ceate new user.
+ * 
+ * * if user is exist return the user details,
+ * * otherwise create it and return data of "User" schema type.
  */
 router.post('/create_user', async function (req, res) {
   try {
@@ -33,8 +36,11 @@ router.post('/create_user', async function (req, res) {
      */
     const foundUser = await User.findOne({ email: email });
     if (foundUser !== null) {
-      res.status(400);
-      res.json({ error: 'user is already exist!' });
+      res.status(200);
+      res.json({
+        message: 'user is already exist!',
+        user: foundUser
+      });
     } else {
 
       /**
@@ -46,10 +52,16 @@ router.post('/create_user', async function (req, res) {
       });
 
       /**
-       * save user to database.
+       * saves user to database,
+       * * and returns it to "front-end".
        */
-      await user.save();
-      res.json({ message: 'A new user has been created!' });
+      const createdUser = await user.save();
+      res.status(201);
+      res.json({
+        message: 'A new user has been created!',
+        user: createdUser
+      });
+
     };
   } catch (error) {
     res.status(400);
