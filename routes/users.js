@@ -20,7 +20,8 @@ router.post('/create_user', async function (req, res) {
      */
     const {
       user_name,
-      email
+      email,
+      profile_picture
     } = req.body;
 
     /**
@@ -44,11 +45,20 @@ router.post('/create_user', async function (req, res) {
     } else {
 
       /**
+       * handle if profile picture is not provided,
+       * * will take the default one.
+       */
+      const userProfilePic = profile_picture && {
+        profile_picture: profile_picture
+      };
+
+      /**
        * Create a new user object to add to the DB.
        */
       const user = new User({
         user_name: user_name,
         email: email,
+        ...userProfilePic
       });
 
       /**

@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
- 
+
 /**
  * import routers.
  */
@@ -32,7 +32,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * load static files from "assets".
+ * * "assets" can have "images, CSS, ...".
+ * 
+ * * we can call assets like this "server_url/asset_name",
+ * * call "asset_name" directly bz we called "app.use"direct without
+ * * url.
+ */
+app.use(express.static(path.join(__dirname, 'assets')));
 
 /**
  * setup routers.
