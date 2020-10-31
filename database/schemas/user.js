@@ -34,11 +34,15 @@ const User = mongoose.Schema({
         type: Date,
         default: new Date().getTime()
     },
+    profile_picture: {
+        type: String,
+        default: 'avatar.jpg'
+    },
     subscription: {
         type: SubscriptionSchema,
         default: null,
         required: false
-    }
+    },
 });
 
 /**
