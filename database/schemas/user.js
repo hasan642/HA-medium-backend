@@ -36,7 +36,15 @@ const User = mongoose.Schema({
     },
     profile_picture: {
         type: String,
-        default: 'avatar.jpg'
+        default: 'avatar.png'
+    },
+    cover_picture: {
+        type: String,
+        default: 'cover.jpg'
+    },
+    bio: {
+        type: String,
+        default: null
     },
     subscription: {
         type: SubscriptionSchema,

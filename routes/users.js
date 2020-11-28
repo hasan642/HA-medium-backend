@@ -21,7 +21,6 @@ router.post('/create_user', async function (req, res) {
     const {
       user_name,
       email,
-      profile_picture
     } = req.body;
 
     /**
@@ -35,7 +34,7 @@ router.post('/create_user', async function (req, res) {
     /**
      * to check if email is already exist or not.
      */
-    const foundUser = await User.findOne({ email: email });
+    const foundUser = await User.findOne({ email });
     if (foundUser !== null) {
       res.status(200);
       res.json({
@@ -45,20 +44,11 @@ router.post('/create_user', async function (req, res) {
     } else {
 
       /**
-       * handle if profile picture is not provided,
-       * * will take the default one.
-       */
-      const userProfilePic = profile_picture && {
-        profile_picture: profile_picture
-      };
-
-      /**
        * Create a new user object to add to the DB.
        */
       const user = new User({
         user_name: user_name,
-        email: email,
-        ...userProfilePic
+        email: email
       });
 
       /**
@@ -73,6 +63,90 @@ router.post('/create_user', async function (req, res) {
       });
 
     };
+  } catch (error) {
+    res.status(400);
+    res.json({ message: error });
+  };
+});
+
+/**
+ * Update the user by "email".
+ */
+router.put('/update_user', async function (req, res) {
+  try {
+
+    /**
+     * get email from body.
+     */
+    const { email } = req.body;
+
+    /**
+     * email is required to find and update user.
+     */
+    if (!email) {
+      res.status(400);
+      res.json({ message: 'The email is required for update' });
+      return;
+    };
+
+    /**
+     * update user by email.
+     */
+    const filter = { email };
+    const update = {};
+
+    /**
+     * remove undefined values.
+     */
+    for (const key in req.body) {
+      if (req.body.hasOwnProperty(key)) {
+        const element = req.body[key];
+
+        /**
+         * if undefined or is email, no need to it
+         * * bz no need to send "email" to update.
+         */
+        if (
+          element !== undefined
+          ||
+          key !== 'email'
+        ) {
+          update[key] = element;
+        };
+      };
+    };
+
+    /**
+     * check if object is empty.
+     */
+    const isUpdateObjEmpty = Object.keys(update).length === 0;
+
+    /**
+     * hanlde if there is no data on object.
+     */
+    if (isUpdateObjEmpty) {
+      res.status(400);
+      res.json({ message: 'No data to update' });
+      return;
+    };
+
+    /**
+     * update user.
+     */
+    const updatedUser = await User.findOneAndUpdate(
+      filter,
+      update,
+      {
+        new: true
+      }
+    );
+    console.log({ updatedUser })
+    res.status(200);
+    res.json({
+      updatedUser,
+      message: 'The user has been updated'
+    });
+
   } catch (error) {
     res.status(400);
     res.json({ message: error });
