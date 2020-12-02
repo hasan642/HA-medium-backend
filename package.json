@@ -5,7 +5,8 @@
   "scripts": {
     "s-dev": "NODE_ENV=development nodemon ./bin/www",
     "s-prod": "NODE_ENV=production nodemon ./bin/www",
-    "kill-ports":"npx kill-port 3000 8080 4200"
+    "kill-ports": "npx kill-port 3000 8080 4200",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
