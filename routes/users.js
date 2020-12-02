@@ -35,6 +35,7 @@ router.post('/create_user', async function (req, res) {
      * to check if email is already exist or not.
      */
     const foundUser = await User.findOne({ email });
+    console.log({ foundUser });
     if (foundUser !== null) {
       res.status(200);
       res.json({
@@ -56,6 +57,7 @@ router.post('/create_user', async function (req, res) {
        * * and returns it to "front-end".
        */
       const createdUser = await user.save();
+      console.log({ createdUser });
       res.status(201);
       res.json({
         message: 'A new user has been created!',
